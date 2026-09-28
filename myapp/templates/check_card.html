@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block title %}Check Card | NovaBank{% endblock %}
+
+{% block content %}
+
+<div class="auth-wrapper">
+    <div class="panel auth-card">
+
+        <h1>Check Card</h1>
+        <p class="description">Find a NovaBank user by card number</p>
+
+        <form method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
+
+            <button type="submit" class="btn btn-primary">
+                Check Card
+            </button>
+        </form>
+
+        {% if found == True %}
+            <div class="info-box">
+                <h3>Card found ✓</h3>
+
+                <p>
+                    First name:
+                    <strong>{{ account.first_name }}</strong>
+                </p>
+
+                <p>
+                    Last name:
+                    <strong>{{ account.last_name }}</strong>
+                </p>
+            </div>
+
+        {% elif found == False %}
+            <div class="info-box">
+                <h3>Card not found</h3>
+            </div>
+        {% endif %}
+
+        <div class="actions">
+            <a href="{% url 'account' %}" class="btn btn-secondary">
+                Back
+            </a>
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}

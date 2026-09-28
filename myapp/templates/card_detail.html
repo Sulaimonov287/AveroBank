@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Card Details | NovaBank
+{% endblock %}
+
+
+{% block content %}
+
+<div style="max-width: 600px; margin: auto;">
+
+    <div class="bank-card">
+
+        <div class="card-top">
+
+            <span>NovaBank</span>
+
+            <span>{{ card.type }}</span>
+
+        </div>
+
+
+        <div class="chip"></div>
+
+
+        <div class="card-number">
+            {{ card.card_number }}
+        </div>
+
+
+        <div class="card-bottom">
+
+            <div>
+                <small>Balance</small>
+                <br>
+                ${{ card.balance }}
+            </div>
+
+            <div>
+                <small>Valid thru</small>
+                <br>
+                {{ card.date }}
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="actions">
+
+        <a href="{% url 'card_update' card.pk %}"
+           class="btn btn-primary">
+            Edit Card
+        </a>
+
+        <a href="{% url 'card_delete' card.pk %}"
+           class="btn btn-danger">
+            Delete Card
+        </a>
+
+        <a href="{% url 'card_list' %}"
+           class="btn btn-secondary">
+            Back
+        </a>
+
+    </div>
+
+</div>
+
+{% endblock %}

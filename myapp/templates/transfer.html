@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Transfer | NovaBank
+{% endblock %}
+
+{% block content %}
+
+<div class="auth-wrapper">
+    <div class="panel auth-card">
+
+        <h1>Send Money</h1>
+
+        <p class="description">
+            Transfer money securely
+        </p>
+
+        <form method="POST">
+            {% csrf_token %}
+
+            {{ form.as_p }}
+
+            <button class="btn btn-primary" type="submit">
+                Send Money
+            </button>
+        </form>
+
+        <div class="actions">
+            <a href="{% url 'account' %}" class="btn btn-secondary">
+                Back
+            </a>
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}

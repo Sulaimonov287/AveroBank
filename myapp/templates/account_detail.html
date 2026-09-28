@@ -1,0 +1,269 @@
+{% extends 'base.html' %}
+
+{% block title %}NovaBank{% endblock %}
+
+{% block content %}
+
+<style>
+    .bank-container {
+        max-width: 1100px;
+        margin: 40px auto;
+        padding: 20px;
+    }
+
+    .welcome {
+        margin-bottom: 25px;
+    }
+
+    .welcome h1 {
+        font-size: 32px;
+        margin-bottom: 5px;
+    }
+
+    .welcome p {
+        color: #8b94a7;
+    }
+
+    .balance-card {
+        background: linear-gradient(135deg, #22c993, #159f78);
+        border-radius: 24px;
+        padding: 30px;
+        color: white;
+        margin-bottom: 25px;
+        box-shadow: 0 15px 40px rgba(34, 201, 147, 0.20);
+    }
+
+    .balance-card p {
+        margin: 0;
+        opacity: 0.8;
+    }
+
+    .balance-card h2 {
+        font-size: 42px;
+        margin: 10px 0;
+    }
+
+    .balance-card span {
+        opacity: 0.8;
+    }
+
+    .menu {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 15px;
+        margin-bottom: 30px;
+    }
+
+    .menu-item {
+        background: #171c28;
+        border: 1px solid #252c3a;
+        padding: 25px 15px;
+        border-radius: 18px;
+        text-align: center;
+        text-decoration: none;
+        color: white;
+        transition: 0.2s;
+    }
+
+    .menu-item:hover {
+        transform: translateY(-4px);
+        border-color: #2ed39a;
+        background: #1d2431;
+    }
+
+    .menu-icon {
+        width: 55px;
+        height: 55px;
+        margin: auto;
+        margin-bottom: 12px;
+        border-radius: 16px;
+        background: #26352f;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 25px;
+    }
+
+    .section {
+        background: #171c28;
+        border: 1px solid #252c3a;
+        border-radius: 20px;
+        padding: 25px;
+        margin-bottom: 20px;
+    }
+
+    .section h2 {
+        margin-top: 0;
+    }
+
+    .profile-row {
+        display: flex;
+        justify-content: space-between;
+        padding: 13px 0;
+        border-bottom: 1px solid #252c3a;
+    }
+
+    .profile-row:last-child {
+        border-bottom: none;
+    }
+
+    .profile-row span {
+        color: #8b94a7;
+    }
+
+    .bottom-actions {
+        display: flex;
+        gap: 10px;
+        margin-top: 20px;
+    }
+
+    .action-btn {
+        padding: 12px 20px;
+        background: #252c3a;
+        border-radius: 10px;
+        text-decoration: none;
+        color: white;
+    }
+
+    .action-btn:hover {
+        background: #303949;
+    }
+
+    @media (max-width: 700px) {
+        .menu {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        .balance-card h2 {
+            font-size: 34px;
+        }
+    }
+</style>
+
+
+<div class="bank-container">
+
+    <!-- ПРИВЕТСТВИЕ -->
+
+    <div class="welcome">
+        <h1>
+            Hello, {{ account.first_name }} 👋
+        </h1>
+
+        <p>Welcome to NovaBank</p>
+    </div>
+
+
+    <!-- БАЛАНС -->
+
+    <div class="balance-card">
+
+        <p>Total balance</p>
+
+        <h2>
+            {{ account.balance }} TJS
+        </h2>
+
+        <span>
+            Account • {{ request.user.phone_number }}
+        </span>
+
+    </div>
+
+
+    <!-- ГЛАВНОЕ МЕНЮ -->
+
+    <div class="menu">
+
+        <a href="{% url 'transfer' %}" class="menu-item">
+            <div class="menu-icon">↗</div>
+            Transfer
+        </a>
+
+        <a href="{% url 'card_list' %}" class="menu-item">
+            <div class="menu-icon">💳</div>
+            My Cards
+        </a>
+
+        <a href="{% url 'transaction_history' %}" class="menu-item">
+            <div class="menu-icon">↕</div>
+            History
+        </a>
+
+        <a href="{% url 'card_create' %}" class="menu-item">
+            <div class="menu-icon">＋</div>
+            New Card
+        </a>
+
+    </div>
+
+
+    <!-- СЕРВИСЫ -->
+
+    <div class="section">
+
+        <h2>Services</h2>
+
+        <div class="menu">
+
+            <a href="{% url 'check_phone' %}" class="menu-item">
+                <div class="menu-icon">📱</div>
+                Check Phone
+            </a>
+
+            <a href="{% url 'check_card' %}" class="menu-item">
+                <div class="menu-icon">💳</div>
+                Check Card
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <!-- ИНФОРМАЦИЯ ACCOUNT -->
+
+    <div class="section">
+
+        <h2>My Account</h2>
+
+        <div class="profile-row">
+            <span>First name</span>
+            <strong>{{ account.first_name }}</strong>
+        </div>
+
+        <div class="profile-row">
+            <span>Last name</span>
+            <strong>{{ account.last_name }}</strong>
+        </div>
+
+        <div class="profile-row">
+            <span>Phone</span>
+            <strong>{{ request.user.phone_number }}</strong>
+        </div>
+
+        <div class="profile-row">
+            <span>Address</span>
+            <strong>{{ account.adress }}</strong>
+        </div>
+
+
+        <div class="bottom-actions">
+
+            <a href="{% url 'account_update' %}"
+               class="action-btn">
+                Edit Profile
+            </a>
+
+            <a href="{% url 'logout' %}"
+               class="action-btn">
+                Logout
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

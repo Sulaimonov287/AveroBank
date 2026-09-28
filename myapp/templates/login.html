@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Login | NovaBank
+{% endblock %}
+
+
+{% block content %}
+
+<div class="auth-wrapper">
+
+    <div class="panel auth-card">
+
+        <h1>Welcome back</h1>
+
+        <p class="description">
+            Login to your NovaBank account.
+        </p>
+
+
+        <form method="POST">
+
+            {% csrf_token %}
+
+            {{ form.as_p }}
+
+            <button class="btn btn-primary" type="submit">
+                Login
+            </button>
+
+        </form>
+
+
+        <div class="auth-bottom">
+
+            Don't have an account?
+
+            <a href="{% url 'register' %}">
+                Register
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

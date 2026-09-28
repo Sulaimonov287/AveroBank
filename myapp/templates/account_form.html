@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Account | NovaBank
+{% endblock %}
+
+
+{% block content %}
+
+<div class="auth-wrapper">
+
+    <div class="panel auth-card">
+
+        <h1>Account information</h1>
+
+        <p class="description">
+            Enter your personal information.
+        </p>
+
+
+        <form method="POST">
+
+            {% csrf_token %}
+
+            {{ form.as_p }}
+
+            <button class="btn btn-primary" type="submit">
+                Save account
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
+{% endblock %}

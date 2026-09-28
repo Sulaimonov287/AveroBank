@@ -1,0 +1,100 @@
+{% extends 'base.html' %}
+
+{% block title %}
+My Cards | NovaBank
+{% endblock %}
+
+
+{% block content %}
+
+<h1 class="page-title">My Cards</h1>
+
+<p class="subtitle">
+    Manage your bank cards.
+</p>
+
+
+<a href="{% url 'card_create' %}"
+   class="btn btn-primary">
+    + Create new card
+</a>
+
+
+<div class="cards-grid">
+
+    {% for card in cards %}
+
+        <div>
+
+            <div class="bank-card">
+
+                <div class="card-top">
+
+                    <span>NovaBank</span>
+
+                    <span>{{ card.type }}</span>
+
+                </div>
+
+
+                <div class="chip"></div>
+
+
+                <div class="card-number">
+                    {{ card.card_number }}
+                </div>
+
+
+                <div class="card-bottom">
+
+                    <div>
+                        <small>Balance</small>
+                        <br>
+                        ${{ card.balance }}
+                    </div>
+
+                    <div>
+                        <small>Valid thru</small>
+                        <br>
+                        {{ card.date }}
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="actions">
+
+                <a href="{% url 'card_detail' card.pk %}"
+                   class="btn btn-secondary">
+                    Details
+                </a>
+
+                <a href="{% url 'card_update' card.pk %}"
+                   class="btn btn-secondary">
+                    Edit
+                </a>
+
+            </div>
+
+        </div>
+
+
+    {% empty %}
+
+        <div class="panel">
+
+            <h2>No cards yet</h2>
+
+            <p class="subtitle">
+                Create your first bank card.
+            </p>
+
+        </div>
+
+    {% endfor %}
+
+</div>
+
+{% endblock %}

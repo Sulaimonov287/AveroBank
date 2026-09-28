@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Transaction History | NovaBank
+{% endblock %}
+
+{% block content %}
+
+<div class="panel">
+
+    <h1 class="page-title">Transaction History</h1>
+
+    <p class="subtitle">
+        Your money transfers
+    </p>
+
+    <div class="actions">
+        <a href="?filter=all" class="btn btn-secondary">All</a>
+        <a href="?filter=sent" class="btn btn-secondary">Sent</a>
+        <a href="?filter=received" class="btn btn-secondary">Received</a>
+    </div>
+
+    <br>
+
+    {% for transaction in transactions %}
+
+        <div class="info-box">
+
+            {% if transaction.sender == user %}
+
+                <h3>Sent</h3>
+
+                <p>
+                    To: {{ transaction.receiver }}
+                </p>
+
+                <p>
+                    Amount: -${{ transaction.amount }}
+                </p>
+
+            {% else %}
+
+                <h3>Received</h3>
+
+                <p>
+                    From: {{ transaction.sender }}
+                </p>
+
+                <p>
+                    Amount: +${{ transaction.amount }}
+                </p>
+
+            {% endif %}
+
+            <p>
+                {{ transaction.created_at }}
+            </p>
+
+        </div>
+
+        <br>
+
+    {% empty %}
+
+        <div class="info-box">
+            No transactions yet.
+        </div>
+
+    {% endfor %}
+
+    <div class="actions">
+        <a href="{% url 'account' %}" class="btn btn-primary">
+            Back to Account
+        </a>
+    </div>
+
+</div>
+
+{% endblock %}

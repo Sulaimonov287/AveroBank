@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>{% block title %}AveroBank{% endblock %}</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background:
+                radial-gradient(circle at top left, #172554, transparent 35%),
+                radial-gradient(circle at bottom right, #064e3b, transparent 30%),
+                #080d18;
+            color: white;
+            min-height: 100vh;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* NAVBAR */
+
+        .navbar {
+            height: 75px;
+            padding: 0 8%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            background: rgba(8, 13, 24, 0.75);
+            backdrop-filter: blur(15px);
+        }
+
+        .logo {
+            font-size: 25px;
+            font-weight: bold;
+        }
+
+        .logo span {
+            color: #34d399;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+        }
+
+        .nav-links a {
+            color: #b8c1d1;
+            transition: 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: white;
+        }
+
+        /* MAIN */
+
+        .container {
+            width: 90%;
+            max-width: 1100px;
+            margin: 50px auto;
+        }
+
+        /* PANELS */
+
+        .panel {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 22px;
+            padding: 30px;
+            backdrop-filter: blur(18px);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
+        }
+
+        .page-title {
+            font-size: 32px;
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            color: #8d99aa;
+            margin-bottom: 30px;
+        }
+
+        /* BUTTONS */
+
+        .btn {
+            display: inline-block;
+            border: none;
+            border-radius: 12px;
+            padding: 12px 20px;
+            font-size: 15px;
+            cursor: pointer;
+            transition: 0.25s;
+        }
+
+        .btn-primary {
+            background: #34d399;
+            color: #06130f;
+            font-weight: bold;
+        }
+
+        .btn-primary:hover {
+            background: #6ee7b7;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: rgba(255,255,255,0.08);
+            color: white;
+            border: 1px solid rgba(255,255,255,0.12);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255,255,255,0.14);
+        }
+
+        .btn-danger {
+            background: #ef4444;
+            color: white;
+        }
+
+        /* FORMS */
+
+        form p {
+            margin-bottom: 18px;
+        }
+
+        form label {
+            display: block;
+            margin-bottom: 8px;
+            color: #b8c1d1;
+        }
+
+        form input,
+        form select,
+        form textarea {
+            width: 100%;
+            padding: 13px 15px;
+            border-radius: 11px;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            background: rgba(255, 255, 255, 0.06);
+            color: white;
+            outline: none;
+            font-size: 15px;
+        }
+
+        form input:focus,
+        form select:focus,
+        form textarea:focus {
+            border-color: #34d399;
+        }
+
+        form select option {
+            color: black;
+        }
+
+        .helptext {
+            display: block;
+            color: #778296;
+            font-size: 12px;
+            margin-top: 5px;
+        }
+
+        .errorlist {
+            color: #f87171;
+            margin: 10px 0;
+            list-style: none;
+        }
+
+        /* AUTH */
+
+        .auth-wrapper {
+            min-height: calc(100vh - 175px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .auth-card {
+            width: 100%;
+            max-width: 450px;
+        }
+
+        .auth-card h1 {
+            margin-bottom: 8px;
+        }
+
+        .auth-card .description {
+            color: #8d99aa;
+            margin-bottom: 25px;
+        }
+
+        .auth-card button {
+            width: 100%;
+            margin-top: 5px;
+        }
+
+        .auth-bottom {
+            text-align: center;
+            color: #8d99aa;
+            margin-top: 20px;
+        }
+
+        .auth-bottom a {
+            color: #34d399;
+        }
+
+        /* ACCOUNT */
+
+        .balance {
+            margin: 25px 0;
+        }
+
+        .balance-label {
+            color: #8d99aa;
+            font-size: 14px;
+        }
+
+        .balance-number {
+            font-size: 45px;
+            font-weight: bold;
+            margin-top: 5px;
+        }
+
+        .account-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin: 25px 0;
+        }
+
+        .info-box {
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.08);
+            padding: 18px;
+            border-radius: 14px;
+        }
+
+        .info-box span {
+            display: block;
+            color: #7f8b9e;
+            font-size: 13px;
+            margin-bottom: 6px;
+        }
+
+        /* CARDS */
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px;
+            margin-top: 30px;
+        }
+
+        .bank-card {
+            min-height: 220px;
+            padding: 25px;
+            border-radius: 22px;
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(
+                135deg,
+                #1e3a8a,
+                #312e81 55%,
+                #065f46
+            );
+            box-shadow: 0 20px 40px rgba(0,0,0,0.25);
+        }
+
+        .bank-card::after {
+            content: "";
+            position: absolute;
+            width: 220px;
+            height: 220px;
+            background: rgba(255,255,255,0.08);
+            border-radius: 50%;
+            right: -80px;
+            top: -90px;
+        }
+
+        .card-top {
+            display: flex;
+            justify-content: space-between;
+            font-weight: bold;
+        }
+
+        .chip {
+            width: 45px;
+            height: 34px;
+            background: #d6b85a;
+            border-radius: 7px;
+            margin-top: 30px;
+        }
+
+        .card-number {
+            margin-top: 25px;
+            font-size: 21px;
+            letter-spacing: 3px;
+        }
+
+        .card-bottom {
+            margin-top: 25px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .card-bottom small {
+            color: #cbd5e1;
+        }
+
+        .actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 25px;
+        }
+
+        /* MOBILE */
+
+        @media (max-width: 700px) {
+            .navbar {
+                padding: 0 5%;
+            }
+
+            .nav-links {
+                gap: 10px;
+                font-size: 13px;
+            }
+
+            .container {
+                width: 92%;
+                margin: 25px auto;
+            }
+
+            .account-grid,
+            .cards-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .page-title {
+                font-size: 27px;
+            }
+
+            .balance-number {
+                font-size: 37px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<nav class="navbar">
+
+    <a href="/" class="logo">
+        Avero<span>Bank</span>
+    </a>
+
+    <div class="nav-links">
+
+        {% if user.is_authenticated %}
+
+            <a href="{% url 'account' %}">
+                Account
+            </a>
+
+            <a href="{% url 'card_list' %}">
+                Cards
+            </a>
+
+            <form method="POST"
+                  action="{% url 'logout' %}"
+                  style="margin: 0;">
+
+                {% csrf_token %}
+
+                <button class="btn btn-secondary" type="submit">
+                    Logout
+                </button>
+
+            </form>
+
+        {% else %}
+
+            <a href="{% url 'login' %}">
+                Login
+            </a>
+
+            <a class="btn btn-primary"
+               href="{% url 'register' %}">
+                Register
+            </a>
+
+        {% endif %}
+
+    </div>
+
+</nav>
+
+
+<main class="container">
+
+    {% block content %}
+
+    {% endblock %}
+
+</main>
+
+</body>
+</html>
