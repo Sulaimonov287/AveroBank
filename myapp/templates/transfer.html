@@ -1,37 +1,328 @@
 {% extends 'base.html' %}
 
-{% block title %}
-Transfer | NovaBank
-{% endblock %}
+{% block title %}Transfer | AveroBank{% endblock %}
+
 
 {% block content %}
 
-<div class="auth-wrapper">
-    <div class="panel auth-card">
 
-        <h1>Send Money</h1>
+<div class="page-head">
 
-        <p class="description">
-            Transfer money securely
+    <div>
+
+        <div class="eyebrow">
+            MONEY TRANSFER
+        </div>
+
+        <h1 class="page-title">
+            Send money
+        </h1>
+
+        <p class="subtitle">
+            Fast and secure transfers between AveroBank clients.
         </p>
 
+    </div>
+
+</div>
+
+
+
+<div class="content-grid">
+
+
+    <div class="panel panel-padding">
+
+
         <form method="POST">
+
             {% csrf_token %}
 
-            {{ form.as_p }}
+            {{ form.non_field_errors }}
 
-            <button class="btn btn-primary" type="submit">
-                Send Money
+
+            <div class="form-group">
+
+                <label>
+                    Pay from
+                </label>
+
+                {{ form.source_type }}
+
+                {{ form.source_type.errors }}
+
+            </div>
+
+
+            <div class="form-group"
+                 id="cardSource">
+
+                <label>
+                    Select card
+                </label>
+
+                {{ form.source_card }}
+
+                {{ form.source_card.errors }}
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Send money by
+                </label>
+
+                {{ form.send_by }}
+
+                {{ form.send_by.errors }}
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label id="receiverLabel">
+                    Receiver
+                </label>
+
+                {{ form.receiver }}
+
+                {{ form.receiver.errors }}
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Amount
+                </label>
+
+                <div style="position:relative;">
+
+                    {{ form.amount }}
+
+                    <span style="
+                        position:absolute;
+                        right:15px;
+                        top:15px;
+                        color:#67766e;
+                        font-size:11px;
+                        font-weight:700;
+                    ">
+                        TJS
+                    </span>
+
+                </div>
+
+                {{ form.amount.errors }}
+
+            </div>
+
+
+            <button type="submit"
+                    class="btn btn-primary btn-full">
+
+                <i data-lucide="send"></i>
+
+                Send money
+
             </button>
+
         </form>
 
-        <div class="actions">
-            <a href="{% url 'account' %}" class="btn btn-secondary">
-                Back
-            </a>
+    </div>
+
+
+
+    <div class="panel panel-padding">
+
+
+        <div class="stat-icon">
+
+            <i data-lucide="shield-check"></i>
+
+        </div>
+
+
+        <h3 style="
+            margin-bottom:8px;
+            font-size:18px;
+        ">
+
+            Secure transfer
+
+        </h3>
+
+
+        <p class="subtitle">
+
+            Payments are processed securely
+            between AveroBank accounts.
+
+        </p>
+
+
+        <div style="
+            margin-top:30px;
+            display:flex;
+            flex-direction:column;
+            gap:18px;
+        ">
+
+
+            <div style="
+                display:flex;
+                gap:12px;
+                align-items:center;
+            ">
+
+                <div class="service-icon">
+
+                    <i data-lucide="zap"></i>
+
+                </div>
+
+                <div>
+
+                    <strong style="font-size:12px;">
+                        Instant
+                    </strong>
+
+                    <div class="subtitle"
+                         style="margin:2px 0 0;">
+
+                        Money arrives immediately
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <div style="
+                display:flex;
+                gap:12px;
+                align-items:center;
+            ">
+
+                <div class="service-icon">
+
+                    <i data-lucide="lock"></i>
+
+                </div>
+
+                <div>
+
+                    <strong style="font-size:12px;">
+                        Protected
+                    </strong>
+
+                    <div class="subtitle"
+                         style="margin:2px 0 0;">
+
+                        Secure AveroBank operation
+
+                    </div>
+
+                </div>
+
+            </div>
+
         </div>
 
     </div>
+
 </div>
+
+{% endblock %}
+
+
+
+{% block extra_js %}
+
+<script>
+
+    const sourceType =
+        document.getElementById("id_source_type");
+
+    const sourceCard =
+        document.getElementById("cardSource");
+
+    const sendBy =
+        document.getElementById("id_send_by");
+
+    const receiver =
+        document.getElementById("id_receiver");
+
+    const receiverLabel =
+        document.getElementById("receiverLabel");
+
+
+    function updateSource() {
+
+        if (!sourceType || !sourceCard)
+            return;
+
+        if (sourceType.value === "account") {
+
+            sourceCard.style.display = "none";
+
+        } else {
+
+            sourceCard.style.display = "block";
+
+        }
+    }
+
+
+    function updateReceiver() {
+
+        if (!sendBy || !receiver)
+            return;
+
+        if (sendBy.value === "phone") {
+
+            receiver.placeholder =
+                "Example: +992900000000";
+
+            receiverLabel.innerText =
+                "Receiver phone number";
+
+        } else {
+
+            receiver.placeholder =
+                "Enter 16-digit card number";
+
+            receiverLabel.innerText =
+                "Receiver card number";
+
+        }
+    }
+
+
+    if (sourceType)
+        sourceType.addEventListener(
+            "change",
+            updateSource
+        );
+
+
+    if (sendBy)
+        sendBy.addEventListener(
+            "change",
+            updateReceiver
+        );
+
+
+    updateSource();
+
+    updateReceiver();
+
+</script>
 
 {% endblock %}

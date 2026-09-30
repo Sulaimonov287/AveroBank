@@ -1,0 +1,163 @@
+{% extends 'base.html' %}
+
+{% block title %}Card Transactions | AveroBank{% endblock %}
+
+
+{% block content %}
+
+
+<div class="page-head">
+
+    <div>
+
+        <div class="eyebrow">
+            CARD ACTIVITY
+        </div>
+
+        <h1 class="page-title">
+            Card transactions
+        </h1>
+
+        <p class="subtitle">
+            Transactions associated with this card.
+        </p>
+
+    </div>
+
+</div>
+
+
+
+<div class="panel panel-padding">
+
+
+    <div class="filter-tabs">
+
+        <a href="?filter=all"
+           class="filter-tab">
+            All
+        </a>
+
+        <a href="?filter=sent"
+           class="filter-tab">
+            Sent
+        </a>
+
+        <a href="?filter=received"
+           class="filter-tab">
+            Received
+        </a>
+
+    </div>
+
+
+    {% for transaction in transactions %}
+
+
+        {% if transaction.sender == user %}
+
+
+            <div class="transaction sent">
+
+                <div class="transaction-icon">
+
+                    <i data-lucide="arrow-up-right"></i>
+
+                </div>
+
+
+                <div class="transaction-content">
+
+                    <strong>
+                        Sent to {{ transaction.receiver }}
+                    </strong>
+
+                    <span>
+                        {{ transaction.created_at }}
+                    </span>
+
+                </div>
+
+
+                <div class="transaction-amount">
+
+                    <strong class="amount-negative">
+
+                        -{{ transaction.amount }} TJS
+
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+        {% else %}
+
+
+            <div class="transaction received">
+
+                <div class="transaction-icon">
+
+                    <i data-lucide="arrow-down-left"></i>
+
+                </div>
+
+
+                <div class="transaction-content">
+
+                    <strong>
+                        Received from {{ transaction.sender }}
+                    </strong>
+
+                    <span>
+                        {{ transaction.created_at }}
+                    </span>
+
+                </div>
+
+
+                <div class="transaction-amount">
+
+                    <strong class="amount-positive">
+
+                        +{{ transaction.amount }} TJS
+
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+        {% endif %}
+
+
+    {% empty %}
+
+
+        <div class="empty">
+
+            <div class="empty-icon">
+
+                <i data-lucide="history"></i>
+
+            </div>
+
+            <h3>
+                No card transactions
+            </h3>
+
+            <p>
+                Operations with this card will appear here.
+            </p>
+
+        </div>
+
+
+    {% endfor %}
+
+
+</div>
+
+{% endblock %}

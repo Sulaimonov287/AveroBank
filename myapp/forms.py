@@ -40,9 +40,7 @@ class TransferForm(forms.Form):
     )
 
     send_by = forms.ChoiceField(choices=SEND_CHOICES)
-
     receiver = forms.CharField(max_length=50)
-
     amount = forms.DecimalField(
         max_digits=10,
         decimal_places=2

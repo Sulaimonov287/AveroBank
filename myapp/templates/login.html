@@ -1,47 +1,150 @@
 {% extends 'base.html' %}
 
-{% block title %}
-Login | NovaBank
-{% endblock %}
+{% block title %}Login | AveroBank{% endblock %}
 
 
-{% block content %}
+{% block guest_content %}
 
-<div class="auth-wrapper">
+<div class="auth-page">
 
-    <div class="panel auth-card">
+    <section class="auth-visual">
 
-        <h1>Welcome back</h1>
+        <a href="#" class="brand">
 
-        <p class="description">
-            Login to your NovaBank account.
-        </p>
+            <div class="brand-logo">
+                A
+            </div>
 
+            <div class="brand-name">
+                Avero<span>Bank</span>
+            </div>
 
-        <form method="POST">
-
-            {% csrf_token %}
-
-            {{ form.as_p }}
-
-            <button class="btn btn-primary" type="submit">
-                Login
-            </button>
-
-        </form>
+        </a>
 
 
-        <div class="auth-bottom">
+        <div class="auth-copy">
 
-            Don't have an account?
+            <div class="mini">
+                AVEROBANK DIGITAL
+            </div>
 
-            <a href="{% url 'register' %}">
-                Register
-            </a>
+            <h1>
+                Banking<br>
+                without<br>
+                <span>limits.</span>
+            </h1>
+
+            <p>
+                One account for your everyday money.
+                Send money, control cards and follow every
+                transaction from one beautiful dashboard.
+            </p>
 
         </div>
 
-    </div>
+
+        <div class="auth-security">
+
+            <div>
+                <i data-lucide="shield-check"></i>
+                Protected
+            </div>
+
+            <div>
+                <i data-lucide="fingerprint"></i>
+                Private
+            </div>
+
+            <div>
+                <i data-lucide="activity"></i>
+                Online 24/7
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <section class="auth-side">
+
+        <div class="auth-card">
+
+            <div class="eyebrow">
+                WELCOME BACK
+            </div>
+
+            <h2>
+                Sign in to AveroBank
+            </h2>
+
+            <p>
+                Enter your details to access your account.
+            </p>
+
+
+            <form method="POST">
+
+                {% csrf_token %}
+
+
+                {% if form.non_field_errors %}
+
+                    {{ form.non_field_errors }}
+
+                {% endif %}
+
+
+                <div class="form-group">
+
+                    <label>
+                        Phone number
+                    </label>
+
+                    {{ form.username }}
+
+                    {{ form.username.errors }}
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Password
+                    </label>
+
+                    {{ form.password }}
+
+                    {{ form.password.errors }}
+
+                </div>
+
+
+                <button type="submit"
+                        class="btn btn-primary btn-full">
+
+                    Sign in
+
+                    <i data-lucide="log-in"></i>
+
+                </button>
+
+            </form>
+
+
+            <div class="auth-bottom">
+
+                New to AveroBank?
+
+                <a href="{% url 'register' %}">
+                    Create account
+                </a>
+
+            </div>
+
+        </div>
+
+    </section>
 
 </div>
 

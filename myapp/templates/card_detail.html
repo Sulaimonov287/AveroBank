@@ -1,68 +1,237 @@
 {% extends 'base.html' %}
 
-{% block title %}
-Card Details | NovaBank
-{% endblock %}
+{% block title %}Card details | AveroBank{% endblock %}
 
 
 {% block content %}
 
-<div style="max-width: 600px; margin: auto;">
 
-    <div class="bank-card">
+<div class="page-head">
 
-        <div class="card-top">
+    <div>
 
-            <span>NovaBank</span>
+        <div class="eyebrow">
+            CARD DETAILS
+        </div>
 
-            <span>{{ card.type }}</span>
+        <h1 class="page-title">
+            AveroBank card
+        </h1>
+
+        <p class="subtitle">
+            Card information and management.
+        </p>
+
+    </div>
+
+</div>
+
+
+
+<div class="content-grid">
+
+
+    <div>
+
+
+        <div class="bank-card">
+
+            <div class="card-top">
+
+                <div class="card-bank">
+
+                    <div class="card-bank-logo">
+                        A
+                    </div>
+
+                    AveroBank
+
+                </div>
+
+
+                <div class="card-type">
+
+                    {{ card.type }}
+
+                </div>
+
+            </div>
+
+
+            <div class="chip"></div>
+
+
+            <div class="card-number">
+
+                {{ card.card_number|slice:":4" }}
+                &nbsp;
+                {{ card.card_number|slice:"4:8" }}
+                &nbsp;
+                {{ card.card_number|slice:"8:12" }}
+                &nbsp;
+                {{ card.card_number|slice:"12:16" }}
+
+            </div>
+
+
+            <div class="card-bottom">
+
+                <div>
+
+                    <small>
+                        Balance
+                    </small>
+
+                    <strong>
+                        {{ card.balance }} TJS
+                    </strong>
+
+                </div>
+
+
+                <div>
+
+                    <small>
+                        Type
+                    </small>
+
+                    <strong>
+                        {{ card.type }}
+                    </strong>
+
+                </div>
+
+            </div>
 
         </div>
 
 
-        <div class="chip"></div>
+        <div class="card-actions">
+
+            <a href="{% url 'transfer' %}"
+               class="btn btn-primary">
+
+                <i data-lucide="send"></i>
+
+                Transfer
+
+            </a>
 
 
-        <div class="card-number">
-            {{ card.card_number }}
-        </div>
+            <a href="{% url 'card_transaction_history' card.pk %}"
+               class="btn btn-secondary">
+
+                <i data-lucide="history"></i>
+
+                Transactions
+
+            </a>
 
 
-        <div class="card-bottom">
+            <a href="{% url 'card_update' card.pk %}"
+               class="btn btn-secondary">
 
-            <div>
-                <small>Balance</small>
-                <br>
-                ${{ card.balance }}
-            </div>
+                <i data-lucide="pencil"></i>
 
-            <div>
-                <small>Valid thru</small>
-                <br>
-                {{ card.date }}
-            </div>
+                Edit
+
+            </a>
 
         </div>
 
     </div>
 
 
-    <div class="actions">
 
-        <a href="{% url 'card_update' card.pk %}"
-           class="btn btn-primary">
-            Edit Card
-        </a>
+    <div class="panel panel-padding">
 
-        <a href="{% url 'card_delete' card.pk %}"
-           class="btn btn-danger">
-            Delete Card
-        </a>
 
-        <a href="{% url 'card_list' %}"
-           class="btn btn-secondary">
-            Back
-        </a>
+        <div class="section-head">
+
+            <h2>
+                Card information
+            </h2>
+
+        </div>
+
+
+        <div class="profile-row">
+
+            <span>
+                Card number
+            </span>
+
+            <strong>
+                {{ card.card_number }}
+            </strong>
+
+        </div>
+
+
+        <div class="profile-row">
+
+            <span>
+                Card type
+            </span>
+
+            <strong>
+                {{ card.type }}
+            </strong>
+
+        </div>
+
+
+        <div class="profile-row">
+
+            <span>
+                Balance
+            </span>
+
+            <strong class="good">
+                {{ card.balance }} TJS
+            </strong>
+
+        </div>
+
+
+        <div class="profile-row">
+
+            <span>
+                CVV
+            </span>
+
+            <strong>
+                •••
+            </strong>
+
+        </div>
+
+
+        <div class="profile-row">
+
+            <span>
+                PIN
+            </span>
+
+            <strong>
+                ••••
+            </strong>
+
+        </div>
+
+
+        <div style="margin-top:20px;">
+
+            <a href="{% url 'card_delete' card.pk %}"
+               class="btn btn-danger btn-full">
+
+                <i data-lucide="trash-2"></i>
+
+                Delete card
+
+            </a>
+
+        </div>
 
     </div>
 

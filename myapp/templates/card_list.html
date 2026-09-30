@@ -1,99 +1,190 @@
 {% extends 'base.html' %}
 
-{% block title %}
-My Cards | NovaBank
-{% endblock %}
+{% block title %}My Cards | AveroBank{% endblock %}
 
 
 {% block content %}
 
-<h1 class="page-title">My Cards</h1>
+<div class="page-head">
 
-<p class="subtitle">
-    Manage your bank cards.
-</p>
+    <div>
+
+        <div class="eyebrow">
+            CARDS
+        </div>
+
+        <h1 class="page-title">
+            My cards
+        </h1>
+
+        <p class="subtitle">
+            Manage all your AveroBank cards in one place.
+        </p>
+
+    </div>
 
 
-<a href="{% url 'card_create' %}"
-   class="btn btn-primary">
-    + Create new card
-</a>
+    <a href="{% url 'card_create' %}"
+       class="btn btn-primary">
+
+        <i data-lucide="plus"></i>
+
+        Create card
+
+    </a>
+
+</div>
+
 
 
 <div class="cards-grid">
 
-    {% for card in cards %}
+{% for card in cards %}
 
-        <div>
 
-            <div class="bank-card">
+    <div class="card-box">
 
-                <div class="card-top">
 
-                    <span>NovaBank</span>
+        <div class="bank-card">
 
-                    <span>{{ card.type }}</span>
+            <div class="card-top">
+
+                <div class="card-bank">
+
+                    <div class="card-bank-logo">
+                        A
+                    </div>
+
+                    AveroBank
 
                 </div>
 
+                <div class="card-type">
 
-                <div class="chip"></div>
-
-
-                <div class="card-number">
-                    {{ card.card_number }}
-                </div>
-
-
-                <div class="card-bottom">
-
-                    <div>
-                        <small>Balance</small>
-                        <br>
-                        ${{ card.balance }}
-                    </div>
-
-                    <div>
-                        <small>Valid thru</small>
-                        <br>
-                        {{ card.date }}
-                    </div>
+                    {{ card.type }}
 
                 </div>
 
             </div>
 
 
-            <div class="actions">
+            <div class="chip"></div>
 
-                <a href="{% url 'card_detail' card.pk %}"
-                   class="btn btn-secondary">
-                    Details
-                </a>
 
-                <a href="{% url 'card_update' card.pk %}"
-                   class="btn btn-secondary">
-                    Edit
-                </a>
+            <div class="card-number">
+
+                {{ card.card_number|slice:":4" }}
+                &nbsp;
+                {{ card.card_number|slice:"4:8" }}
+                &nbsp;
+                {{ card.card_number|slice:"8:12" }}
+                &nbsp;
+                {{ card.card_number|slice:"12:16" }}
+
+            </div>
+
+
+            <div class="card-bottom">
+
+                <div>
+
+                    <small>
+                        Balance
+                    </small>
+
+                    <strong>
+                        {{ card.balance }} TJS
+                    </strong>
+
+                </div>
+
+
+                <div>
+
+                    <small>
+                        Card
+                    </small>
+
+                    <strong>
+                        {{ card.type }}
+                    </strong>
+
+                </div>
 
             </div>
 
         </div>
 
 
-    {% empty %}
 
-        <div class="panel">
+        <div class="card-actions">
 
-            <h2>No cards yet</h2>
+            <a href="{% url 'card_detail' card.pk %}"
+               class="btn btn-secondary">
 
-            <p class="subtitle">
-                Create your first bank card.
-            </p>
+                <i data-lucide="eye"></i>
+
+                Details
+
+            </a>
+
+
+            <a href="{% url 'card_transaction_history' card.pk %}"
+               class="btn btn-secondary">
+
+                <i data-lucide="history"></i>
+
+                History
+
+            </a>
+
+
+            <a href="{% url 'card_update' card.pk %}"
+               class="btn btn-secondary">
+
+                <i data-lucide="pencil"></i>
+
+                Edit
+
+            </a>
 
         </div>
 
-    {% endfor %}
+    </div>
+
+
+{% empty %}
+
+
+    <div class="panel empty">
+
+        <div class="empty-icon">
+
+            <i data-lucide="credit-card"></i>
+
+        </div>
+
+        <h3>
+            You don't have any cards
+        </h3>
+
+        <p>
+            Create your first premium AveroBank card.
+        </p>
+
+        <a href="{% url 'card_create' %}"
+           class="btn btn-primary">
+
+            <i data-lucide="plus"></i>
+
+            Create card
+
+        </a>
+
+    </div>
+
+
+{% endfor %}
 
 </div>
 

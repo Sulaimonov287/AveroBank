@@ -1,78 +1,194 @@
 {% extends 'base.html' %}
 
-{% block title %}
-Transaction History | NovaBank
-{% endblock %}
+{% block title %}Transactions | AveroBank{% endblock %}
+
 
 {% block content %}
 
-<div class="panel">
 
-    <h1 class="page-title">Transaction History</h1>
+<div class="page-head">
 
-    <p class="subtitle">
-        Your money transfers
-    </p>
+    <div>
 
-    <div class="actions">
-        <a href="?filter=all" class="btn btn-secondary">All</a>
-        <a href="?filter=sent" class="btn btn-secondary">Sent</a>
-        <a href="?filter=received" class="btn btn-secondary">Received</a>
+        <div class="eyebrow">
+            ACTIVITY
+        </div>
+
+        <h1 class="page-title">
+            Transactions
+        </h1>
+
+        <p class="subtitle">
+            Your AveroBank transfer history.
+        </p>
+
     </div>
 
-    <br>
+
+    <a href="{% url 'transfer' %}"
+       class="btn btn-primary">
+
+        <i data-lucide="plus"></i>
+
+        New transfer
+
+    </a>
+
+</div>
+
+
+
+<div class="panel panel-padding">
+
+
+    <div class="filter-tabs">
+
+        <a href="?filter=all"
+           class="filter-tab">
+
+            All
+
+        </a>
+
+        <a href="?filter=sent"
+           class="filter-tab">
+
+            Sent
+
+        </a>
+
+        <a href="?filter=received"
+           class="filter-tab">
+
+            Received
+
+        </a>
+
+    </div>
+
+
 
     {% for transaction in transactions %}
 
-        <div class="info-box">
 
-            {% if transaction.sender == user %}
+        {% if transaction.sender == user %}
 
-                <h3>Sent</h3>
 
-                <p>
-                    To: {{ transaction.receiver }}
-                </p>
+            <div class="transaction sent">
 
-                <p>
-                    Amount: -${{ transaction.amount }}
-                </p>
+                <div class="transaction-icon">
 
-            {% else %}
+                    <i data-lucide="arrow-up-right"></i>
 
-                <h3>Received</h3>
+                </div>
 
-                <p>
-                    From: {{ transaction.sender }}
-                </p>
 
-                <p>
-                    Amount: +${{ transaction.amount }}
-                </p>
+                <div class="transaction-content">
 
-            {% endif %}
+                    <strong>
+                        Transfer to {{ transaction.receiver }}
+                    </strong>
 
-            <p>
-                {{ transaction.created_at }}
-            </p>
+                    <span>
+                        {{ transaction.created_at }}
+                    </span>
 
-        </div>
+                </div>
 
-        <br>
+
+                <div class="transaction-amount">
+
+                    <strong class="amount-negative">
+
+                        -{{ transaction.amount }} TJS
+
+                    </strong>
+
+                    <span>
+                        Sent
+                    </span>
+
+                </div>
+
+            </div>
+
+
+        {% else %}
+
+
+            <div class="transaction received">
+
+                <div class="transaction-icon">
+
+                    <i data-lucide="arrow-down-left"></i>
+
+                </div>
+
+
+                <div class="transaction-content">
+
+                    <strong>
+                        Transfer from {{ transaction.sender }}
+                    </strong>
+
+                    <span>
+                        {{ transaction.created_at }}
+                    </span>
+
+                </div>
+
+
+                <div class="transaction-amount">
+
+                    <strong class="amount-positive">
+
+                        +{{ transaction.amount }} TJS
+
+                    </strong>
+
+                    <span>
+                        Received
+                    </span>
+
+                </div>
+
+            </div>
+
+
+        {% endif %}
+
 
     {% empty %}
 
-        <div class="info-box">
-            No transactions yet.
+
+        <div class="empty">
+
+            <div class="empty-icon">
+
+                <i data-lucide="receipt-text"></i>
+
+            </div>
+
+            <h3>
+                No transactions yet
+            </h3>
+
+            <p>
+                Your transfers will appear here.
+            </p>
+
+            <a href="{% url 'transfer' %}"
+               class="btn btn-primary">
+
+                Send money
+
+            </a>
+
         </div>
+
 
     {% endfor %}
 
-    <div class="actions">
-        <a href="{% url 'account' %}" class="btn btn-primary">
-            Back to Account
-        </a>
-    </div>
 
 </div>
 

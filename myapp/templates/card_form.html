@@ -1,47 +1,278 @@
 {% extends 'base.html' %}
 
-{% block title %}
-Card | NovaBank
-{% endblock %}
+{% block title %}Card | AveroBank{% endblock %}
 
 
 {% block content %}
 
-<div class="auth-wrapper">
+<div class="page-head">
 
-    <div class="panel auth-card">
+    <div>
 
-        <h1>Bank Card</h1>
+        <div class="eyebrow">
+            AVERO CARDS
+        </div>
 
-        <p class="description">
-            Enter your card information.
+        <h1 class="page-title">
+            Bank card
+        </h1>
+
+        <p class="subtitle">
+            Create or update your digital AveroBank card.
         </p>
 
+    </div>
+
+</div>
+
+
+<div class="content-grid">
+
+
+    <div class="panel panel-padding">
 
         <form method="POST">
 
             {% csrf_token %}
 
-            {{ form.as_p }}
 
-            <button class="btn btn-primary" type="submit">
-                Save Card
-            </button>
+            <div class="form-group">
+
+                <label>
+                    Card number
+                </label>
+
+                {{ form.card_number }}
+
+                {{ form.card_number.errors }}
+
+            </div>
+
+
+            <div style="
+                display:grid;
+                grid-template-columns:1fr 1fr;
+                gap:14px;
+            ">
+
+                <div class="form-group">
+
+                    <label>
+                        CVV
+                    </label>
+
+                    {{ form.cvv }}
+
+                    {{ form.cvv.errors }}
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        PIN
+                    </label>
+
+                    {{ form.pin }}
+
+                    {{ form.pin.errors }}
+
+                </div>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Card type
+                </label>
+
+                {{ form.type }}
+
+                {{ form.type.errors }}
+
+            </div>
+
+
+            <div style="
+                display:flex;
+                gap:10px;
+                flex-wrap:wrap;
+            ">
+
+                <button type="submit"
+                        class="btn btn-primary">
+
+                    <i data-lucide="check"></i>
+
+                    Save card
+
+                </button>
+
+
+                <a href="{% url 'card_list' %}"
+                   class="btn btn-secondary">
+
+                    Cancel
+
+                </a>
+
+            </div>
 
         </form>
 
+    </div>
 
-        <div class="actions">
 
-            <a href="{% url 'card_list' %}"
-               class="btn btn-secondary">
-                Cancel
-            </a>
+
+    <!-- PREVIEW -->
+
+    <div>
+
+        <div class="eyebrow"
+             style="margin-bottom:10px;">
+
+            LIVE PREVIEW
+
+        </div>
+
+
+        <div class="bank-card">
+
+            <div class="card-top">
+
+                <div class="card-bank">
+
+                    <div class="card-bank-logo">
+                        A
+                    </div>
+
+                    AveroBank
+
+                </div>
+
+                <div class="card-type"
+                     id="previewType">
+
+                    PREMIUM
+
+                </div>
+
+            </div>
+
+
+            <div class="chip"></div>
+
+
+            <div class="card-number"
+                 id="previewNumber">
+
+                0000 0000 0000 0000
+
+            </div>
+
+
+            <div class="card-bottom">
+
+                <div>
+
+                    <small>
+                        Balance
+                    </small>
+
+                    <strong>
+                        0.00 TJS
+                    </strong>
+
+                </div>
+
+
+                <div>
+
+                    <small>
+                        AVERO
+                    </small>
+
+                    <strong>
+                        BLACK
+                    </strong>
+
+                </div>
+
+            </div>
 
         </div>
 
     </div>
 
 </div>
+
+{% endblock %}
+
+
+{% block extra_js %}
+
+<script>
+
+    const numberInput =
+        document.getElementById("id_card_number");
+
+    const typeInput =
+        document.getElementById("id_type");
+
+    const previewNumber =
+        document.getElementById("previewNumber");
+
+    const previewType =
+        document.getElementById("previewType");
+
+
+    function updateCard() {
+
+        if (numberInput) {
+
+            let number =
+                numberInput.value.replace(/\D/g, "");
+
+            let formatted =
+                number.match(/.{1,4}/g);
+
+            previewNumber.innerText =
+                formatted
+                    ? formatted.join(" ")
+                    : "0000 0000 0000 0000";
+        }
+
+
+        if (typeInput) {
+
+            previewType.innerText =
+                typeInput.value || "PREMIUM";
+
+        }
+    }
+
+
+    if (numberInput) {
+        numberInput.addEventListener(
+            "input",
+            updateCard
+        );
+    }
+
+
+    if (typeInput) {
+        typeInput.addEventListener(
+            "input",
+            updateCard
+        );
+    }
+
+
+    updateCard();
+
+</script>
 
 {% endblock %}

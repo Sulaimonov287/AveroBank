@@ -1,47 +1,156 @@
 {% extends 'base.html' %}
 
-{% block title %}
-Register | NovaBank
-{% endblock %}
+{% block title %}Create account | AveroBank{% endblock %}
 
 
-{% block content %}
+{% block guest_content %}
 
-<div class="auth-wrapper">
+<div class="auth-page">
 
-    <div class="panel auth-card">
+    <section class="auth-visual">
 
-        <h1>Create account</h1>
+        <a href="#" class="brand">
 
-        <p class="description">
-            Join NovaBank and manage your money securely.
-        </p>
+            <div class="brand-logo">
+                A
+            </div>
 
+            <div class="brand-name">
+                Avero<span>Bank</span>
+            </div>
 
-        <form method="POST">
-
-            {% csrf_token %}
-
-            {{ form.as_p }}
-
-            <button class="btn btn-primary" type="submit">
-                Create account
-            </button>
-
-        </form>
+        </a>
 
 
-        <div class="auth-bottom">
+        <div class="auth-copy">
 
-            Already have an account?
+            <div class="mini">
+                A new generation of banking
+            </div>
 
-            <a href="{% url 'login' %}">
-                Login
-            </a>
+            <h1>
+                Your money.<br>
+                Your rules.<br>
+                <span>Your bank.</span>
+            </h1>
+
+            <p>
+                Manage your balance, cards and transfers
+                in one secure digital banking platform.
+                Fast. Simple. Beautiful.
+            </p>
 
         </div>
 
-    </div>
+
+        <div class="auth-security">
+
+            <div>
+                <i data-lucide="shield-check"></i>
+                Secure payments
+            </div>
+
+            <div>
+                <i data-lucide="lock"></i>
+                Protected account
+            </div>
+
+            <div>
+                <i data-lucide="zap"></i>
+                Instant transfers
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <section class="auth-side">
+
+        <div class="auth-card">
+
+            <div class="eyebrow">
+                GET STARTED
+            </div>
+
+            <h2>
+                Create your account
+            </h2>
+
+            <p>
+                Welcome to the future of digital banking.
+            </p>
+
+
+            <form method="POST">
+
+                {% csrf_token %}
+
+
+                <div class="form-group">
+
+                    <label>
+                        Phone number
+                    </label>
+
+                    {{ form.phone_number }}
+
+                    {{ form.phone_number.errors }}
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Password
+                    </label>
+
+                    {{ form.password1 }}
+
+                    {{ form.password1.errors }}
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Confirm password
+                    </label>
+
+                    {{ form.password2 }}
+
+                    {{ form.password2.errors }}
+
+                </div>
+
+
+                <button type="submit"
+                        class="btn btn-primary btn-full">
+
+                    Create Avero account
+
+                    <i data-lucide="arrow-right"></i>
+
+                </button>
+
+            </form>
+
+
+            <div class="auth-bottom">
+
+                Already have an account?
+
+                <a href="{% url 'login' %}">
+                    Sign in
+                </a>
+
+            </div>
+
+        </div>
+
+    </section>
 
 </div>
 

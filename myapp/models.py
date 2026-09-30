@@ -4,12 +4,7 @@ from django.contrib.auth.models import AbstractUser
 
 class User(AbstractUser):
     username = None
-
-    phone_number = models.CharField(
-        max_length=50,
-        unique=True
-    )
-
+    phone_number = models.CharField(max_length=50, unique=True)
     USERNAME_FIELD = 'phone_number'
     REQUIRED_FIELDS = []
 
@@ -18,7 +13,6 @@ class User(AbstractUser):
 
 class Account(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-
     first_name = models.CharField( max_length=50)
     last_name = models.CharField( max_length=50)
     adress = models.CharField( max_length=50)
@@ -30,7 +24,6 @@ class Account(models.Model):
 
 class Card(models.Model):
     account = models.ForeignKey(Account, on_delete=models.CASCADE)
-
     card_number = models.CharField( max_length=16, unique=True)
     cvv = models.CharField( max_length=3)
     date = models.DateField( auto_now_add=True)
@@ -52,4 +45,3 @@ class Transaction(models.Model):
 
     def __str__(self):
         return f"{self.sender} - {self.receiver}"
-    

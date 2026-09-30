@@ -1,15 +1,12 @@
 from django.urls import reverse_lazy
 from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib.auth.mixins import LoginRequiredMixin
-
 from django.views.generic import CreateView, DetailView, ListView, UpdateView, DeleteView
 from .models import User, Account, Card
 from .forms import RegisterForm, AccountForm, CardForm
 from django.contrib.auth import login
-
 from django.views.generic import FormView, ListView
 from django.db import transaction
-
 from .models import User, Account, Card, Transaction
 from .forms import TransferForm, CheckPhoneForm, CheckCardForm
 
@@ -30,7 +27,7 @@ class Login(LoginView):
     template_name = 'login.html'
     next_page = 'account'
 
-class Logout(LoginView):
+class Logout(LogoutView):
     next_page = 'login'
 
 
@@ -292,8 +289,6 @@ class CheckPhoneView(LoginRequiredMixin, FormView):
         return self.render_to_response(
             self.get_context_data()
         )
-
-
 
 class CheckCardView(LoginRequiredMixin, FormView):
     template_name = 'check_card.html'

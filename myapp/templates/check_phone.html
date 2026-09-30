@@ -1,52 +1,138 @@
 {% extends 'base.html' %}
 
-{% block title %}Check Phone | NovaBank{% endblock %}
+{% block title %}Check Phone | AveroBank{% endblock %}
+
 
 {% block content %}
 
-<div class="auth-wrapper">
-    <div class="panel auth-card">
 
-        <h1>Check Phone</h1>
-        <p class="description">Find a NovaBank user by phone number</p>
+<div class="page-head">
 
-        <form method="POST">
-            {% csrf_token %}
-            {{ form.as_p }}
+    <div>
 
-            <button type="submit" class="btn btn-primary">
-                Check Phone
-            </button>
-        </form>
-
-        {% if found == True %}
-            <div class="info-box">
-                <h3>User found ✓</h3>
-
-                <p>
-                    First name:
-                    <strong>{{ account.first_name }}</strong>
-                </p>
-
-                <p>
-                    Last name:
-                    <strong>{{ account.last_name }}</strong>
-                </p>
-            </div>
-
-        {% elif found == False %}
-            <div class="info-box">
-                <h3>User not found</h3>
-            </div>
-        {% endif %}
-
-        <div class="actions">
-            <a href="{% url 'account' %}" class="btn btn-secondary">
-                Back
-            </a>
+        <div class="eyebrow">
+            AVERO DIRECTORY
         </div>
 
+        <h1 class="page-title">
+            Check phone
+        </h1>
+
+        <p class="subtitle">
+            Verify an AveroBank client before sending money.
+        </p>
+
     </div>
+
+</div>
+
+
+
+<div style="max-width:650px;">
+
+
+    <div class="panel panel-padding">
+
+
+        <form method="POST">
+
+            {% csrf_token %}
+
+
+            <div class="form-group">
+
+                <label>
+                    Phone number
+                </label>
+
+                {{ form.phone_number }}
+
+                {{ form.phone_number.errors }}
+
+            </div>
+
+
+            <button type="submit"
+                    class="btn btn-primary btn-full">
+
+                <i data-lucide="search"></i>
+
+                Find client
+
+            </button>
+
+        </form>
+
+
+
+        {% if found == True %}
+
+
+            <div class="result-card">
+
+                <div class="result-head">
+
+                    <i data-lucide="badge-check"></i>
+
+                    AveroBank client found
+
+                </div>
+
+
+                <div class="profile-row">
+
+                    <span>
+                        First name
+                    </span>
+
+                    <strong>
+                        {{ account.first_name }}
+                    </strong>
+
+                </div>
+
+
+                <div class="profile-row">
+
+                    <span>
+                        Last name
+                    </span>
+
+                    <strong>
+                        {{ account.last_name }}
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+        {% elif found == False %}
+
+
+            <div class="result-card"
+                 style="
+                    background:rgba(255,101,117,.05);
+                    border-color:rgba(255,101,117,.15);
+                 ">
+
+                <div class="result-head"
+                     style="color:#ff8994;">
+
+                    <i data-lucide="circle-x"></i>
+
+                    User not found
+
+                </div>
+
+            </div>
+
+
+        {% endif %}
+
+
+    </div>
+
 </div>
 
 {% endblock %}

@@ -1,34 +1,145 @@
 {% extends 'base.html' %}
 
-{% block title %}
-Account | NovaBank
-{% endblock %}
+{% block title %}Profile | AveroBank{% endblock %}
 
 
 {% block content %}
 
-<div class="auth-wrapper">
+<div class="page-head">
 
-    <div class="panel auth-card">
+    <div>
 
-        <h1>Account information</h1>
+        <div class="eyebrow">
+            PERSONAL INFORMATION
+        </div>
 
-        <p class="description">
-            Enter your personal information.
+        <h1 class="page-title">
+            Complete your profile
+        </h1>
+
+        <p class="subtitle">
+            Keep your personal AveroBank information up to date.
         </p>
 
+    </div>
+
+</div>
+
+
+<div class="content-grid">
+
+    <div class="panel panel-padding">
 
         <form method="POST">
 
             {% csrf_token %}
 
-            {{ form.as_p }}
 
-            <button class="btn btn-primary" type="submit">
-                Save account
+            <div class="form-group">
+
+                <label>
+                    First name
+                </label>
+
+                {{ form.first_name }}
+
+                {{ form.first_name.errors }}
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Last name
+                </label>
+
+                {{ form.last_name }}
+
+                {{ form.last_name.errors }}
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Address
+                </label>
+
+                {{ form.adress }}
+
+                {{ form.adress.errors }}
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Passport ID
+                </label>
+
+                {{ form.passport_id }}
+
+                {{ form.passport_id.errors }}
+
+            </div>
+
+
+            <button type="submit"
+                    class="btn btn-primary">
+
+                <i data-lucide="save"></i>
+
+                Save information
+
             </button>
 
         </form>
+
+    </div>
+
+
+    <div class="panel panel-padding">
+
+        <div class="stat-icon">
+            <i data-lucide="shield-check"></i>
+        </div>
+
+        <h3 style="font-size:18px; margin-bottom:10px;">
+            Your data is protected
+        </h3>
+
+        <p class="subtitle">
+            Personal information is used to identify
+            your AveroBank account and secure banking operations.
+        </p>
+
+        <div style="
+            margin-top:25px;
+            padding:16px;
+            border-radius:16px;
+            background:rgba(37,228,154,.05);
+            border:1px solid rgba(37,228,154,.10);
+        ">
+
+            <div style="
+                display:flex;
+                gap:10px;
+                align-items:center;
+                color:#25e49a;
+                font-size:12px;
+                font-weight:700;
+            ">
+
+                <i data-lucide="lock"></i>
+
+                Secure profile
+
+            </div>
+
+        </div>
 
     </div>
 

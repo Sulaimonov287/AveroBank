@@ -1,52 +1,138 @@
 {% extends 'base.html' %}
 
-{% block title %}Check Card | NovaBank{% endblock %}
+{% block title %}Check Card | AveroBank{% endblock %}
+
 
 {% block content %}
 
-<div class="auth-wrapper">
-    <div class="panel auth-card">
 
-        <h1>Check Card</h1>
-        <p class="description">Find a NovaBank user by card number</p>
+<div class="page-head">
 
-        <form method="POST">
-            {% csrf_token %}
-            {{ form.as_p }}
+    <div>
 
-            <button type="submit" class="btn btn-primary">
-                Check Card
-            </button>
-        </form>
-
-        {% if found == True %}
-            <div class="info-box">
-                <h3>Card found ✓</h3>
-
-                <p>
-                    First name:
-                    <strong>{{ account.first_name }}</strong>
-                </p>
-
-                <p>
-                    Last name:
-                    <strong>{{ account.last_name }}</strong>
-                </p>
-            </div>
-
-        {% elif found == False %}
-            <div class="info-box">
-                <h3>Card not found</h3>
-            </div>
-        {% endif %}
-
-        <div class="actions">
-            <a href="{% url 'account' %}" class="btn btn-secondary">
-                Back
-            </a>
+        <div class="eyebrow">
+            CARD VERIFICATION
         </div>
 
+        <h1 class="page-title">
+            Check card
+        </h1>
+
+        <p class="subtitle">
+            Verify an AveroBank card before making a transfer.
+        </p>
+
     </div>
+
+</div>
+
+
+
+<div style="max-width:650px;">
+
+
+    <div class="panel panel-padding">
+
+
+        <form method="POST">
+
+            {% csrf_token %}
+
+
+            <div class="form-group">
+
+                <label>
+                    Card number
+                </label>
+
+                {{ form.card_number }}
+
+                {{ form.card_number.errors }}
+
+            </div>
+
+
+            <button type="submit"
+                    class="btn btn-primary btn-full">
+
+                <i data-lucide="scan-search"></i>
+
+                Check card
+
+            </button>
+
+        </form>
+
+
+
+        {% if found == True %}
+
+
+            <div class="result-card">
+
+                <div class="result-head">
+
+                    <i data-lucide="badge-check"></i>
+
+                    Card verified
+
+                </div>
+
+
+                <div class="profile-row">
+
+                    <span>
+                        Owner first name
+                    </span>
+
+                    <strong>
+                        {{ account.first_name }}
+                    </strong>
+
+                </div>
+
+
+                <div class="profile-row">
+
+                    <span>
+                        Owner last name
+                    </span>
+
+                    <strong>
+                        {{ account.last_name }}
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+        {% elif found == False %}
+
+
+            <div class="result-card"
+                 style="
+                    background:rgba(255,101,117,.05);
+                    border-color:rgba(255,101,117,.15);
+                 ">
+
+                <div class="result-head"
+                     style="color:#ff8994;">
+
+                    <i data-lucide="circle-x"></i>
+
+                    Card not found
+
+                </div>
+
+            </div>
+
+
+        {% endif %}
+
+
+    </div>
+
 </div>
 
 {% endblock %}

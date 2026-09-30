@@ -1,21 +1,59 @@
 {% extends 'base.html' %}
 
-{% block title %}
-Delete Card | NovaBank
-{% endblock %}
+{% block title %}Delete Card | AveroBank{% endblock %}
 
 
 {% block content %}
 
-<div class="auth-wrapper">
 
-    <div class="panel auth-card">
+<div style="
+    max-width:520px;
+    margin:60px auto;
+">
 
-        <h1>Delete card?</h1>
 
-        <p class="description">
-            Are you sure you want to delete
-            {{ card.card_number }}?
+    <div class="panel panel-padding"
+         style="text-align:center;">
+
+
+        <div style="
+            width:70px;
+            height:70px;
+            margin:0 auto 20px;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            border-radius:22px;
+            background:rgba(255,101,117,.08);
+            color:#ff7786;
+        ">
+
+            <i data-lucide="trash-2"
+               style="
+                    width:28px;
+                    height:28px;
+               ">
+            </i>
+
+        </div>
+
+
+        <h1 style="
+            font-size:24px;
+            margin-bottom:10px;
+        ">
+
+            Delete this card?
+
+        </h1>
+
+
+        <p class="subtitle"
+           style="margin-bottom:27px;">
+
+            Card {{ card.card_number }} will be permanently removed
+            from your AveroBank account.
+
         </p>
 
 
@@ -23,22 +61,36 @@ Delete Card | NovaBank
 
             {% csrf_token %}
 
-            <button class="btn btn-danger"
-                    type="submit">
-                Yes, delete card
-            </button>
+
+            <div style="
+                display:flex;
+                gap:10px;
+                justify-content:center;
+                flex-wrap:wrap;
+            ">
+
+
+                <a href="{% url 'card_detail' card.pk %}"
+                   class="btn btn-secondary">
+
+                    Cancel
+
+                </a>
+
+
+                <button type="submit"
+                        class="btn btn-danger">
+
+                    <i data-lucide="trash-2"></i>
+
+                    Delete card
+
+                </button>
+
+
+            </div>
 
         </form>
-
-
-        <div class="actions">
-
-            <a href="{% url 'card_detail' card.pk %}"
-               class="btn btn-secondary">
-                Cancel
-            </a>
-
-        </div>
 
     </div>
 
